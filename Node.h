@@ -7,27 +7,28 @@
 #ifndef Node_h
 #define Node_h
 
-
-typedef struct node
+struct node
 {
-struct node* next;
-int order_number;
-int qty;
-}order;
-
+    int data;
+    struct node *nextPtr;
+};
 
 typedef struct node Node;
 typedef struct node* NodePtr;
 
-//fucking bullshit mai chai krub
-void enqueue(NodePtr* head, NodePtr* tail, int x){
-  NodePtr new_node=(NodePtr) malloc(sizeof(Node));
-  new_node->order_number = x;
-  new_node->next = NULL;
-  if(new_node) {
-  if(*head==NULL)*head = new_node;
-  else (*tail)->next = new_node;
-  *tail = new_node;
+
+void enqueue(NodePtr * head, NodePtr* tail, int x){
+  Node* new_node=(NodePtr) malloc(sizeof(Node));
+  if(new_node)
+  { 
+  /* Finish queue*/
+    new_node->data = x;
+    new_node->nextPtr = NULL;
+    if (*head == NULL)
+      *head = new_node;
+    else
+      (*tail)->nextPtr = new_node;
+    *tail = new_node;   
   }
 }
 
@@ -35,10 +36,12 @@ void enqueue(NodePtr* head, NodePtr* tail, int x){
 int dequeue(NodePtr* head, NodePtr* tail){
   NodePtr t=*head;
    if(t){
-   int value= t->order_number;
-   *head = t->next;
-   if(*head==NULL) *tail=NULL;
-   free(t);
+   int value= t->data;
+   /* Finish dequeue*/
+   *head = (*head)->nextPtr;
+   if (*head == NULL)
+    *tail = NULL;
+   free(t);    
    return value;
    }
    printf("Empty queue");
